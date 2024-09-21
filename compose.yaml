@@ -1,0 +1,64 @@
+name: depreciation-app
+
+# include:
+#   - C:\Users\96110\Documents\Projects\depreciation\depriciation-frontend\compose.yaml
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./docker-files/Dockerfile
+      target: final
+    env_file: ".env.docker"
+    profiles: [backend-prod]
+    networks:
+      - front-tier
+      - back-tier
+    ports:
+      - 8080:3003
+    depends_on:
+      - mysql
+
+  backenddev:
+    build:
+      context: .
+      dockerfile: ./docker-files/Dockerfile
+      target: dev-build
+    env_file: ".env.docker"
+    profiles: [backend-dev]
+    volumes:
+      - ./src:/app/src
+
+      # -  app/src/node_modules
+    networks:
+      - front-tier
+      - back-tier
+    ports:
+      - 8080:3003
+    depends_on:
+      - mysql 
+    
+
+  mysql:
+     image: mysql:9.0
+     networks:
+        - back-tier
+    #  ports:
+    #     - :3306
+     volumes:
+        - db-data:/var/lib/mysql  
+     profiles: [backend-prod,backend-dev]   
+     environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: depreciation
+
+ 
+
+volumes:
+  db-data:
+
+networks:
+  front-tier:
+  back-tier:
+
+            

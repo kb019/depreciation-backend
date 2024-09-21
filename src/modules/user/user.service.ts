@@ -4,7 +4,7 @@ import { RegisterUserDto } from 'src/dtos/user/registerUserDto';
 import { User } from 'src/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UUID } from 'crypto';
+// import { UUID } from 'crypto';
 import { UpdateUser } from 'src/dtos/user/updateUser.dto';
 
 @Injectable()

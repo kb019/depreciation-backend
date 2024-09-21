@@ -36,3 +36,5 @@ lerna-debug.log*
 
 #adding environment variables
 .env
+.env.dev
+.env.prod
